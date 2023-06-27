@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<meta charset="utf-8">
+<title>Créer un Produit</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+
+				<div class="card-header text-white bg-info">Ajouter des
+					Produits Références</div>
+				<div class="card-body">
+
+					<form th:action="@{/saveProduit}" method="post"
+						th:object="${produit}">
+
+						<div class="form-group">
+							<label class="control-label" for="nomProduit">Nom Produit
+								:</label> <input type="text" name="nomProduit" class="form-control"
+								th:field="*{nomProduit}" /> <span
+								class="fieldError bg-danger text-white"
+								th:errors="*{nomProduit}"></span>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">Catégorie du produit :</label> <select
+								name="list" th:field="*{categorie}" class="form-control">
+								<option value="">--Choisissez une catégorie--</option>
+								<option th:each="cat:${listeCat}" th:value="${cat.idCategorie}"
+									th:text="${cat.nomCat}"></option>
+							</select> <span class="fieldError bg-danger text-white"
+								th:errors="*{categorie}"></span>
+
+						</div>
+
+						<div class="form-group">
+							<label class="control-label" for="dlc">DLC du produit en
+								jours</label> <input type="text" class="form-control" th:field="*{dlc}" required/>
+							<!--  <span class="fieldError bg-danger text-white" th:errors="*{dlc}"></span>-->
+						</div>
+
+						<div>
+							<button type="submit" class="btn btn-info">Valider</button>
+						</div>
+
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

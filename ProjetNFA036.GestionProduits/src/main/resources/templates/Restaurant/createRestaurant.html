@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<head>
+
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container">
+			<p></p>
+
+			<div class="position">
+				<img
+					src="https://docalabordage.files.wordpress.com/2014/11/work_in_progress_imagelarge1.jpg">
+
+			</div>
+			<p></p>
+
+			<form th:action="@{/listerProduitsStock}">
+				<button type="submit" class="btn btn-info">Retour</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

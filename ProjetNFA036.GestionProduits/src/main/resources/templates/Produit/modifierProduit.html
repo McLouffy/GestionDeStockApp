@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<meta charset="utf-8">
+<title>Editer des produits</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header text-white bg-info">Modifier des
+					Produits</div>
+				<div class="card-body">
+					<form th:action="@{updateProduit}" method="post"
+						th:object="${produit}">
+						<div class="form-group">
+							<label class="control-label" hidden="">ID Produit :</label> <input
+								type="hidden" th:field="*{idProduit}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom Produit :</label> <input
+								type="text" name="nomProduit" class="form-control"
+								th:field="*{nomProduit}" />
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">Catégorie du produit :</label> <select
+								name="list" th:field="*{categorie}" class="form-control">
+								<option value="">--Choisissez une catégorie--</option>
+								<option th:each="cat:${listeCat}" th:value="${cat.idCategorie}"
+									th:text="${cat.nomCat}"></option>
+							</select>
+							
+						</div>
+
+
+
+						<div class="form-group">
+							<label class="control-label"> DLC en jours :</label> <input
+								type="text" name="dlc" class="form-control"
+								th:field="*{dlc}" />
+
+						</div>
+						<div>
+							<button type="submit" class="btn btn-info" value="modifier">Valider</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

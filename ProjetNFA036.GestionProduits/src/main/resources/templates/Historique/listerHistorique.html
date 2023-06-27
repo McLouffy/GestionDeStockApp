@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<meta charset="utf-8">
+<title>Historique</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+
+				<div class="card-header text-white bg-info ">Historique</div>
+
+				<div class="card-body">
+					<table class="table table-striped ">
+						<tr>
+
+							<th>Ref</th>
+							<th>Nom Produit</th>
+							<th>Ajouté par</th>
+							<th>Statut</th>
+							<th>Date de controle</th>
+							<th>Action</th>
+
+
+
+
+						</tr>
+
+						<tr th:each="h:${historique}">
+
+							<td th:text="${h.stock.idStock}"></td>
+							<td th:text="${h.stock.produit.nomProduit}"></td>
+							<td th:text="${h.stock.userCreation }"></td>
+							<td>
+								<p th:if="${h.action} == 'Creation'">En cours</p>
+								<p th:unless="${h.action} == 'Creation'"
+									th:text="${h.stock.status}"></p>
+							</td>
+							<td th:text="${h.dateControle}"></td> 
+							<!--<td
+								th:text="${#temporals.format(h.dateControle, 'dd-MM-yyyy || HH:mm')}">-->
+							<td th:text="${h.action}"></td>
+
+						</tr>
+					</table>
+
+					<div class="container">
+						<p>Nombre de produits : [[${totalItem}]]</p>
+						<nav aria-label="Page navigation" class="paging">
+
+
+							<ul class="pagination pagination-sm">
+
+								<li class="page-link active" aria-current="page"
+									th:if="${currentPage !=-0}"><a class="page-item"
+									th:href="@{/listerHistorique(page=${currentPage-1}, size=${size} ) }">
+										<span aria-hidden="true">&laquo;</span>
+								</a></li>
+
+
+
+								<li class="page-link" th:each="page,status:${pages}"><a
+									class="page-item"
+									th:class="${status.index==currentPage?'text-info':'text' }"
+									th:href="@{listerHistorique(page=${status.index}, size=${size} ) }"
+									th:text="${status.index +1}"></a></li>
+
+
+
+
+								<li class="page-link" th:if="${currentPage+1 !=pages}"><a
+									class="page-item"
+									th:href="@{/listerHistorique(page=${currentPage+1}, size=${size} ) }">
+										<span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+
+						</nav>
+
+
+
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<meta charset="utf-8">
+<title>Créer une catégorie</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<!-- titre de la section ajouter produits -->
+				<div class="card-header text-white bg-info">Ajouter une
+					catégorie</div>
+				<div class="card-body">
+
+					<form th:action="@{/saveCategorie}" method="post"
+						th:object="${categorie}">
+
+
+						<div class="form-group">
+							<label class="control-label"> Nom de la catégorie :</label> <input
+								type="text" name="nomCat" class="form-control"
+								th:field="*{nomCat}" /> <span th:errors=*{nomCat}
+								class="text-danger"> </span>
+
+
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">Description de la catégorie
+								:</label> <input type="text" name="descriptionCat" class="form-control"
+								th:field="*{descriptionCat}" /> <span
+								th:errors=*{descriptionCat} class="text-danger"> </span>
+
+
+
+						</div>
+
+
+
+						<div>
+							<button type="submit" class="btn btn-info">Valider</button>
+
+						</div>
+
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

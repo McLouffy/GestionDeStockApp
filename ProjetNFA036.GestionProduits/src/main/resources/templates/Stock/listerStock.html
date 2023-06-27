@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<meta charset="utf-8">
+<title>Liste des Produits en stock</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+
+				<div class="card-header text-white bg-info ">Produits en stock</div>
+
+				<div class="card-body">
+					<table class="table table-striped">
+						<tr>
+							<th>ID</th>
+							<th>Nom Produit</th>
+							<th>Date ouverture</th>
+							<th>Date expiration</th>
+							<th>Temps restant</th>
+							<th>Statut</th>
+							<th>Ajouté par</th>
+							<th>Actions</th>
+
+
+						</tr>
+
+						<tr class="bg-danger text-white" th:each="s:${stock}"
+							th:if="${s.tempsRestant} == '0'">
+							<td th:text="${s.idStock}"></td>
+							<td th:text="${s.produit.nomProduit}"></td>
+							<td th:text="${s.dateOuverture}"></td>
+							<td th:text="${s.dateExpiration}"></td>
+							<td th:text="${s.tempsRestant}"></td>
+							<td th:text="${s.status}"></td>
+							<td th:text="${s.userCreation}"></td>
+
+
+
+							<td sec:authorize="hasRole('ADMIN')"><a class="text-warning"
+								onclick="return confirm('Etes-vous sûr de vouloir modifier ce produit stock ?')"
+								th:href="@{modifierProduitStock(id=${s.idStock}, page=${currentPage},size=${size})}"><i
+									class="far fa-edit"></i></a></td>
+
+						</tr>
+						
+						<tr  th:each="s:${stock}"
+							th:if="${s.tempsRestant} != '0'">
+							<td th:text="${s.idStock}"></td>
+							<td th:text="${s.produit.nomProduit}"></td>
+							<td th:text="${s.dateOuverture}"></td>
+							<td th:text="${s.dateExpiration}"></td>
+							<td th:text="${s.tempsRestant}"></td>
+							<td th:text="${s.status}"></td>
+							<td th:text="${s.userCreation}"></td>
+
+
+
+							<td sec:authorize="hasRole('ADMIN')"><a class="text-warning"
+								onclick="return confirm('Etes-vous sûr de vouloir modifier ce produit stock ?')"
+								th:href="@{modifierProduitStock(id=${s.idStock}, page=${currentPage},size=${size})}"><i
+									class="far fa-edit"></i></a></td>
+
+						</tr>
+
+					</table>
+
+					<div class="container">
+						<p>Nombre de produits : [[${totalItem}]]</p>
+						<nav aria-label="Page navigation" class="paging">
+
+
+							<ul class="pagination pagination-sm">
+
+								<li class="page-link active" aria-current="page"
+									th:if="${currentPage !=-0}"><a class="page-item"
+									th:href="@{/listerProduitsStock(page=${currentPage-1}, size=${size} ) }">
+										<span aria-hidden="true">&laquo;</span>
+								</a></li>
+
+
+
+								<li class="page-link" th:each="page,status:${pages}"><a
+									class="page-item"
+									th:class="${status.index==currentPage?'text-info':'text' }"
+									th:href="@{listerProduitsStock(page=${status.index}, size=${size} ) }"
+									th:text="${status.index +1}"></a></li>
+
+								<li class="page-link" th:if="${currentPage+1 !=pages}"><a
+									class="page-item"
+									th:href="@{/listerProduitsStock(page=${currentPage+1}, size=${size} ) }">
+										<span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+
+						</nav>
+
+						<form th:action="@{showCreateStock}">
+							<button type="submit" class="btn btn-info">Ajouter un
+								produit en stock</button>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
